@@ -1,18 +1,25 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
 class FriendListCard extends React.Component {
   addToFavourites = () => {
     this.props.dispatch({
-      type: "ADD_TO_FAVOURITES",
-      movie: this.props.movie,
+      type: 'ADD_TO_FAVOURITES',
+      friend: this.props.friend
     });
   };
 
   addToUnFavourites = () => {
     this.props.dispatch({
-      type: "ADD_TO_UNFAVOURITES",
-      movie: this.props.movie,
+      type: 'ADD_TO_UNFAVOURITES',
+      friend: this.props.friend
+    });
+  };
+
+  deleteFriend = () => {
+    this.props.dispatch({
+      type: 'DELETE_FRIEND',
+      friend: this.props.friend
     });
   };
 
@@ -29,7 +36,7 @@ class FriendListCard extends React.Component {
               <p>is not your friend</p>
             )}
           </div>
-          <div className="footer"></div>
+          <div className="footer" />
         </div>
         <div className="right">
           <div className="buttons-row">
@@ -38,12 +45,14 @@ class FriendListCard extends React.Component {
                 src="https://image.flaticon.com/icons/png/512/786/786331.png"
                 alt="star-icon"
                 className="image-dime"
+                onClick={this.addToUnFavourites}
               />
             ) : (
               <img
                 src="https://image.flaticon.com/icons/png/512/786/786230.png"
                 className="image-dime"
                 alt="star-icon"
+                onClick={this.addToFavourites}
               />
             )}
           </div>
@@ -52,8 +61,9 @@ class FriendListCard extends React.Component {
           <div className="buttons-row">
             <img
               src="https://image.flaticon.com/icons/png/512/3096/3096687.png"
-              alt="star-icon"
+              alt="TRASH-icon"
               className="image-dime"
+              onClick={this.deleteFriend}
             />
           </div>
         </div>
@@ -63,7 +73,7 @@ class FriendListCard extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    friendList: state.friendList,
+    friendList: state.friendList
   };
 }
 export default connect(mapStateToProps)(FriendListCard);

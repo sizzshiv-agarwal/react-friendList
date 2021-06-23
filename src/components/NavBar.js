@@ -1,14 +1,22 @@
 // import { handleSearchMovies } from "../actions";
-import React from "react";
-import { connect } from "react-redux";
-import { filterFriends } from "../actions/friendListActions";
+import React from 'react';
+import { connect } from 'react-redux';
+import { setSearchTextValue } from '../actions/friendListActions';
 class NavBar extends React.Component {
-  handleSearchOnChange = (e) => {
-    console.log("Value changed", this);
-    this.setState({
-      searchText: e.target.value,
+  handleSearchOnChange = e => {
+    console.log('Value changed', this);
+    this.props.dispatch({
+      type: 'HANDLE_SEARCH_TEXT_VALUE',
+      data: e.target.value
     });
-    this.props.dispatch(filterFriends());
+  };
+
+  handleEnterKey = e => {
+    if (e.key === 'Enter' && this.props.searchText) {
+      this.props.dispatch({
+        type: 'ADD_FRIEND'
+      });
+    }
   };
 
   render() {
@@ -16,7 +24,10 @@ class NavBar extends React.Component {
       <div className="nav">
         <div className="search-container">
           <h1 className="text-heading-style">Friends List</h1>
-          <input onChange={this.handleSearchOnChange}></input>
+          <input
+            onKeyDown={this.handleEnterKey}
+            onChange={this.handleSearchOnChange}
+          />
         </div>
       </div>
     );
@@ -26,6 +37,7 @@ class NavBar extends React.Component {
 function mapStateToProps(state) {
   return {
     searchText: state.searchText,
+    friendList: state.friendList
   };
 }
 export default connect(mapStateToProps)(NavBar);
