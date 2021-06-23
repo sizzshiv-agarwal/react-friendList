@@ -3,18 +3,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setSearchTextValue } from '../actions/friendListActions';
 class NavBar extends React.Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'HANDLE_DUMMY_FRIEND_LIST'
+    });
+  }
   handleSearchOnChange = e => {
     console.log('Value changed', this);
-    this.props.dispatch({
-      type: 'HANDLE_SEARCH_TEXT_VALUE',
-      data: e.target.value
-    });
+    if (e.target.value) {
+      this.props.dispatch({
+        type: 'HANDLE_SEARCH_TEXT_VALUE',
+        data: e.target.value
+      });
+    } else {
+      this.props.dispatch({
+        type: 'RESET_FRIENDS_LIST'
+      });
+    }
   };
 
   handleEnterKey = e => {
     if (e.key === 'Enter' && this.props.searchText) {
       this.props.dispatch({
         type: 'ADD_FRIEND'
+      });
+    } else if (e.key === 'Enter' && !this.props.searchText) {
+      this.props.dispatch({
+        type: 'RESET_FRIENDS_LIST'
       });
     }
   };
@@ -37,7 +52,8 @@ class NavBar extends React.Component {
 function mapStateToProps(state) {
   return {
     searchText: state.searchText,
-    friendList: state.friendList
+    friendList: state.friendList,
+    dummyFriendList: state.dummyFriendList
   };
 }
 export default connect(mapStateToProps)(NavBar);

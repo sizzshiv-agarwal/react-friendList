@@ -1,10 +1,11 @@
 import {
-  FILTER_FRIENDS,
   ADD_TO_FAVOURITES,
   ADD_TO_UNFAVOURITES,
   DELETE_FRIEND,
   ADD_FRIEND,
-  HANDLE_SEARCH_TEXT_VALUE
+  HANDLE_SEARCH_TEXT_VALUE,
+  RESET_FRIENDS_LIST,
+  HANDLE_DUMMY_FRIEND_LIST
 } from '../actions/actionTypes';
 const friendListStore = {
   friendList: [
@@ -28,16 +29,15 @@ const friendListStore = {
     }
   ],
   showSearchResult: false,
-  searchText: ''
+  searchText: '',
+  dummyFriendList: []
 };
 
 export default function friendListReducer(state = friendListStore, action) {
   switch (action.type) {
-    case FILTER_FRIENDS: {
+    case RESET_FRIENDS_LIST: {
       return {
-        showSearchResult: state.friendList.filter(friend => {
-          if (friend.name.toLowerCase().includes(state.searchText)) return true;
-        })
+        friendList: { ...state.dummyFriendList }
       };
     }
     case ADD_TO_UNFAVOURITES: {
@@ -85,7 +85,16 @@ export default function friendListReducer(state = friendListStore, action) {
     case HANDLE_SEARCH_TEXT_VALUE: {
       return {
         ...state,
-        searchText: action.data
+        searchText: action.data,
+        friendList: state.friendList.filter(friend =>
+          friend.name.toLowerCase().includes(state.searchText)
+        )
+      };
+    }
+    case HANDLE_DUMMY_FRIEND_LIST: {
+      return {
+        ...state,
+        dummyFriendList: { ...state.friendList }
       };
     }
     default:

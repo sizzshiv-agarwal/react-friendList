@@ -1,7 +1,7 @@
-import NavBar from "./NavBar";
-import FriendListCard from "./FriendListCard";
-import React from "react";
-import { connect } from "react-redux";
+import NavBar from './NavBar';
+import FriendListCard from './FriendListCard';
+import React from 'react';
+import { connect } from 'react-redux';
 // import { filterFriends } from "../actions/friendListActions";
 
 class App extends React.Component {
@@ -11,7 +11,7 @@ class App extends React.Component {
     if (!this.props.friendListStore.showSearchResult) {
       return this.props.friendListStore.friendList;
     }
-    this.props.friendListStore.friendList.filter((friend) => {
+    this.props.friendListStore.friendList.filter(friend => {
       if (
         friend.name.toLowerCase().includes.this.props.friendListStore.searchText
       ) {
@@ -20,18 +20,17 @@ class App extends React.Component {
     });
   };
   render() {
-    const listofObj = this.filterFriendsList();
+    const listofObj = this.props.friendListStore.friendList;
+    const length = listofObj.length;
     return (
       <div className="main">
-        <NavBar></NavBar>
+        <NavBar />
 
         <div className="list">
-          {listofObj.map((friend, keys) => (
-            <FriendListCard
-              friend={friend}
-              key={`movie -${keys}`}
-            ></FriendListCard>
-          ))}
+          {length &&
+            listofObj.map((friend, keys) => (
+              <FriendListCard friend={friend} key={`movie -${keys}`} />
+            ))}
         </div>
       </div>
     );
@@ -40,7 +39,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    friendListStore: state,
+    friendListStore: state
   };
 }
 export default connect(mapStateToProps)(App);

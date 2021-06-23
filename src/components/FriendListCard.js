@@ -73,7 +73,8 @@ class FriendListCard extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    friendList: state.friendList
+    friendList: state.friendList,
+    dummyFriendList: state.dummyFriendList
   };
 }
 export default connect(mapStateToProps)(FriendListCard);
