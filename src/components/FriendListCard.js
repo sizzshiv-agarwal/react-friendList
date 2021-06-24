@@ -2,9 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class FriendListCard extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    this.setState({ data: nextProps.data });
-  }
   addToFavourites = () => {
     this.props.dispatch({
       type: 'ADD_TO_FAVOURITES',
@@ -25,6 +22,10 @@ class FriendListCard extends React.Component {
       friend: this.props.friend
     });
   };
+
+  componentDidUpdate() {
+    console.log('FRIENDLIST COMPONENT UPDTED');
+  }
 
   render() {
     const { friend } = this.props;
@@ -76,8 +77,7 @@ class FriendListCard extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    friendList: state.friendList,
-    dummyFriendList: state.dummyFriendList
+    friendListStore: state
   };
 }
 export default connect(mapStateToProps)(FriendListCard);

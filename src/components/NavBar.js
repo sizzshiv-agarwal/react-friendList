@@ -8,6 +8,10 @@ class NavBar extends React.Component {
       type: 'HANDLE_DUMMY_FRIEND_LIST'
     });
   }
+
+  componentDidUpdate() {
+    console.log('NAVBAR COMPONENT UPDTED');
+  }
   handleSearchOnChange = e => {
     console.log('Value changed', this);
     if (e.target.value) {
@@ -21,6 +25,11 @@ class NavBar extends React.Component {
       });
     }
     this.forceUpdate();
+  };
+  sortListBasedOnFavourites = () => {
+    this.props.dispatch({
+      type: 'SORT_FAVOURITES'
+    });
   };
 
   handleEnterKey = e => {
@@ -45,6 +54,14 @@ class NavBar extends React.Component {
             onKeyDown={this.handleEnterKey}
             onChange={this.handleSearchOnChange}
           />
+          <span>
+            <img
+              src="https://img-premium.flaticon.com/png/512/307/premium/307517.png?token=exp=1624565821~hmac=526a73656181f259f39772800c0bda90"
+              onClick={this.sortListBasedOnFavourites}
+              alt="favourite-sort"
+              className="image-dime top-style"
+            />
+          </span>
         </div>
       </div>
     );
@@ -53,9 +70,7 @@ class NavBar extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    searchText: state.searchText,
-    friendList: state.friendList,
-    dummyFriendList: state.dummyFriendList
+    friendListStore: state
   };
 }
 export default connect(mapStateToProps)(NavBar);

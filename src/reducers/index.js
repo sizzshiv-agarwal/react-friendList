@@ -5,7 +5,8 @@ import {
   ADD_FRIEND,
   HANDLE_SEARCH_TEXT_VALUE,
   RESET_FRIENDS_LIST,
-  HANDLE_DUMMY_FRIEND_LIST
+  HANDLE_DUMMY_FRIEND_LIST,
+  SORT_FAVOURITES
 } from '../actions/actionTypes';
 const friendListStore = {
   friendList: [
@@ -38,7 +39,7 @@ export default function friendListReducer(state = friendListStore, action) {
     case RESET_FRIENDS_LIST: {
       return {
         ...state,
-        friendList: { ...state.dummyFriendList },
+        friendList: [...state.dummyFriendList],
         searchText: ''
       };
     }
@@ -70,6 +71,15 @@ export default function friendListReducer(state = friendListStore, action) {
         )
       };
     }
+    case SORT_FAVOURITES: {
+      return {
+        ...state,
+        friendList: state.friendList.sort(function(a) {
+          if (a.isFavourite) return -1;
+          else return 1;
+        })
+      };
+    }
     case ADD_FRIEND: {
       return {
         ...state,
@@ -90,14 +100,14 @@ export default function friendListReducer(state = friendListStore, action) {
         ...state,
         searchText: action.data,
         friendList: state.friendList.filter(friend =>
-          friend.name.toLowerCase().includes(state.searchText)
+          friend.name.toLowerCase().includes(state.searchText.toLowerCase())
         )
       };
     }
     case HANDLE_DUMMY_FRIEND_LIST: {
       return {
         ...state,
-        dummyFriendList: { ...state.friendList }
+        dummyFriendList: [...state.friendList]
       };
     }
     default:

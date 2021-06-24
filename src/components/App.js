@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 // import { filterFriends } from "../actions/friendListActions";
 
 class App extends React.Component {
+  componentDidUpdate() {
+    console.log('APP COMPONENT UPDTED');
+  }
+
   componentDidMount() {}
 
   filterFriendsList = () => {
@@ -22,6 +26,7 @@ class App extends React.Component {
   render() {
     const listofObj = this.props.friendListStore.friendList;
     const length = listofObj.length;
+    console.log('INSIDE APP RENDER');
     return (
       <div className="main">
         <NavBar />
