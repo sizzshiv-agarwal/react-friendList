@@ -20,6 +20,7 @@ class NavBar extends React.Component {
         type: 'RESET_FRIENDS_LIST'
       });
     }
+    this.forceUpdate();
   };
 
   handleEnterKey = e => {
@@ -32,6 +33,7 @@ class NavBar extends React.Component {
         type: 'RESET_FRIENDS_LIST'
       });
     }
+    this.forceUpdate();
   };
 
   render() {

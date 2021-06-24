@@ -37,7 +37,9 @@ export default function friendListReducer(state = friendListStore, action) {
   switch (action.type) {
     case RESET_FRIENDS_LIST: {
       return {
-        friendList: { ...state.dummyFriendList }
+        ...state,
+        friendList: { ...state.dummyFriendList },
+        searchText: ''
       };
     }
     case ADD_TO_UNFAVOURITES: {
@@ -79,7 +81,8 @@ export default function friendListReducer(state = friendListStore, action) {
             isFriend: true,
             id: state.friendList.length + 1
           }
-        ]
+        ],
+        searchText: state.searchText
       };
     }
     case HANDLE_SEARCH_TEXT_VALUE: {

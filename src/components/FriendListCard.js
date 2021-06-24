@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class FriendListCard extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.data });
+  }
   addToFavourites = () => {
     this.props.dispatch({
       type: 'ADD_TO_FAVOURITES',
